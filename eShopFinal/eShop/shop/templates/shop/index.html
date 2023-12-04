@@ -1,0 +1,8 @@
+{% block body %}
+    {% if user.is_authenticated %}
+        <h1>Shop</h1>
+        <p>You are logged in and viewing the shop</p>
+    {% else %}
+        <p>Please log in first</p>
+    {% endif %}
+{% endblock %}
