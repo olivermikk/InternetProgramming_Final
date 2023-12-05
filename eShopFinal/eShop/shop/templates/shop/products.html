@@ -1,25 +1,38 @@
 <!-- NEEDS WORK -->
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>PRoduct Details</title>
- 
+    <title>Product Details</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
     </script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
     </script>
 </head>
+
 <body>
- 
-    {% for product in product_images %}
-            <div class="col-md-4">
-                    {{ hotel.name }}
-                    <img src="{{ eShopFinal.hotel_Main_Img.url }}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;" />
+    <h1>Products:</h1>
+    <div class="product-container">
+        <div class="product-grid">
+            {% for object in objects %}
+            <div class="product-item">
+                {{object}}
+                <div class="product-item img">
+                    <img alt="" src="{{ object.image.url }}">
+                </div>
+
             </div>
-    {% endfor %}
- 
+            {% empty %}
+            <p>No objects found</p>
+            {% endfor %}
+        </div>
+    </div>
+
 </body>
+
 </html>

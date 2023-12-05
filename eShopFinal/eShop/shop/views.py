@@ -1,19 +1,19 @@
 from django.shortcuts import render
-from .forms import ImageForm
+from .models import Product
 
 
 # Create your views here.
 
 def shop(request):
-    return render((request, 'index.html', {}))
+    return render(request, 'shop/index.html', {})
 
 
 
 
 def products(request):
-    if request.method == 'GET':
- 
-        # getting all the objects of hotel.
-        product = shop.objects.all()
-        return render((request, 'index.html', {'images': product}))
+    qs = Product.objects.all()
+    context = {
+        'objects' : qs
+    }
+    return render(request, "shop/products.html", context)
 
