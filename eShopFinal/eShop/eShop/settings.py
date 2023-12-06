@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     
     'crispy_forms',
     'crispy_bootstrap4',
+    'rest_framework',
 
 
     'django.contrib.admin',
@@ -136,7 +137,8 @@ CRISPY_TEMPLATE_PACK="bootstrap4"
 
 
 # After Login user is directed to the shop view
-LOGIN_REDIRECT_URL = "/shop"
+LOGIN_REDIRECT_URL = "/shop/products"
+LOGOUT_REDIRECT_URL = "home"
 
 MEDIA_URL = '/media/'
 # Path where media is stored

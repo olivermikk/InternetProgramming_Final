@@ -1,0 +1,53 @@
+<!-- NEEDS WORK -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Product Details</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+    </script>
+</head>
+
+
+<body>
+    <!-- ADD NAV BAR-->
+    {% include 'shop/navBar.html' %}
+
+    {% block content %}
+    <h1>Your Cart</h1>
+
+    {% if user.is_authenticated %}
+    {% if cart.products.all %}
+    <ul>
+        {% for product in cart.products.all %}
+        <li>
+            {{ product.name }} - ${{ product.price }}
+            <div class="product-item-cart img">
+                <img alt="" src="{{ product.image.url }}">
+            </div>
+            <form method="post" action="{% url 'shop:remove_from_cart' name=product.name %}">
+                {% csrf_token %}
+                <button type="submit">Remove from Cart</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Your cart is empty.</p>
+    {% endif %}
+    {% else %}
+    <p>Please log in to view your cart.</p>
+    {% endif %}
+    {% endblock %}
+</body>
+
+
+</html>

@@ -1,0 +1,41 @@
+<!-- NEEDS WORK -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Product Details</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+    </script>
+</head>
+
+
+<body>
+
+    <!-- ADD NAV BAR-->
+    {% include 'shop/navBar.html' %}
+
+    <h1>Product Details:</h1>
+    <!--CHANGE CLASS NAME TO MAKE CSS FOR THE IMAGE TO BE SMALLER-->
+    <div class="product-item-solo">
+        <h3>{{ object.name }}</h3>
+        <p>{{ object.description }} ${{ object.price }}</p>
+        <div class="product-item-solo img">
+            <img alt="" src="{{ object.image.url }}">
+        </div>
+    </div>
+
+    <form method="post" action="{% url 'shop:add_to_cart' name=object.name %}">
+        {% csrf_token %}
+        <button type="submit">Add to Cart</button>
+    </form>
+</body>
+
+</html>

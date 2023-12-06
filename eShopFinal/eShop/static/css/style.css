@@ -1,36 +1,152 @@
-/* Clear default margin and padding */
-body, h1, h2, p, ul, li {
-  margin: 0;
-  padding: 0;
+/* Product Layout */
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 20px;
 }
 
+h1 {
+  color: #a60e0e;
+}
 
-
-/* Style the products container */
 .product-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 20px;
+  /* Remove the gap property to have items next to each other */
 }
 
-/* Style each product item */
 .product-item {
-  border: 1px solid #ddd;
   padding: 15px;
   text-align: center;
+  grid-template-columns: auto auto auto auto auto auto;
+  transition: transform 0.3s ease-in-out;
+  box-sizing: border-box;
 }
 
-/* Ensure images are uniform and responsive */
+
+.product-item:hover {
+  transform: scale(1.05);
+}
+
+.product-item h3 {
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.product-item p {
+  color: #777;
+  margin-bottom: 15px;
+}
+
 .product-item img {
   max-width: 100%;
-  max-height: 150px; 
   height: auto;
 }
 
-/* Make the layout responsive */
-@media (max-width: 768px) {
-  .product-container {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+/* Set three items per row */
+@media (min-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.product-item-solo {
+  padding: 15px;
+  text-align: center;
+  grid-template-columns: auto auto auto auto auto auto;
+  box-sizing: border-box;
+}
+
+.product-item-solo img {
+  max-width: 50%;
+  height: auto;
+}
+
+.product-item-cart img {
+  max-width: 10%;
+  height: auto;
+}
+
+
+
+
+
+
+
+/* Navigation bar styles */
+.navbar {
+  background-color: #f8f9fa; /* Light background color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+}
+
+.navbar-toggler-icon {
+  background-color: #007bff; /* Toggle button color */
+}
+
+.navbar-nav {
+  margin-left: auto; /* Align the right side of the navbar */
+}
+
+/* Navbar links styles */
+.navbar-nav .nav-link {
+  color: #333; /* Link text color */
+  padding: 8px 15px; /* Adjust link padding */
+}
+
+.navbar-nav .nav-link:hover {
+  color: #007bff; /* Hover color */
+}
+
+/* Dropdown styles */
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block; /* Show the dropdown menu on hover */
+}
+
+.dropdown-menu {
+  background-color: #f8f9fa; /* Dropdown background color */
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+}
+
+.dropdown-item {
+  color: #333; /* Dropdown item text color */
+  padding: 8px 15px; /* Adjust dropdown item padding */
+}
+
+.dropdown-item:hover {
+  background-color: #007bff; /* Hover background color */
+  color: #fff; /* Hover text color */
+}
+
+/* User information styles */
+.navbar-text {
+  margin-right: 15px;
+  color: #555; /* Text color */
+}
+
+/* Search form styles */
+.form-inline input,
+.form-inline button {
+  margin-right: 10px;
+}
+
+/* Responsive styles */
+@media (max-width: 767px) {
+  .navbar-nav {
+      margin-top: 10px; /* Adjust top margin for smaller screens */
+  }
+
+  .form-inline {
+      display: block; /* Stack the search form on top in small screens */
+  }
+
+  .form-inline input {
+      margin-bottom: 10px; /* Add some space between the search input and button */
   }
 }
