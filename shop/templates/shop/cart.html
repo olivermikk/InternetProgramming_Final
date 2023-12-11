@@ -1,0 +1,87 @@
+<!-- ADD LAYOUT -->
+{% extends 'C:\Users\olive\Desktop\ACG Fall 2023\Internet Programming\eShopFinal\eShop\templates\layout.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Product Details</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+    </script>
+</head>
+
+
+<body>
+    <div class="navBar">
+        {% block navBar %}navBar{% endblock %}
+    </div>
+
+    {% block content %}
+    <h1>Your Cart</h1>
+
+    {% if user.is_authenticated %}
+    {% if cart.products.all %}
+    <ul>
+        {% for product in cart.products.all %}
+        <li>
+            {{ product.name }} - ${{ product.price }}
+            <div class="product-item-cart img">
+                <img alt="" src="{{ product.image.url }}">
+            </div>
+            <form method="post" action="{% url 'shop:remove_from_cart' name=product.name %}">
+                {% csrf_token %}
+                <button type="submit">Remove from Cart</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+
+
+
+    
+    {% else %}
+    <p>Your cart is empty.</p>
+    <a class="nav-link" href="{% url 'shop:products' %}">Find products to add Here</a>
+
+    {% if recommended_products %}
+    <div class="recommended-products">
+        <h1>Recommended Products</h1>
+        <div class="product-grid">
+            {% for recommended_product in recommended_products %}
+            <div class="product-item">
+                <a href="{% url 'shop:productDetails' name=recommended_product.name %}" target="_self">
+                    <div class="product-item img">
+                        <img alt="" src="{{ recommended_product.image.url }}">
+                    </div>
+                    <h3>{{ recommended_product.name }} {{ recommended_product.category }}</h3>
+                    <p>${{ recommended_product.price }}</p>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    {% endif %}
+
+    {% endif %}
+    {% else %}
+    <p>Please log in to view your cart.</p>
+    <a class="nav-link" href="{% url 'login' %}">Login</a>
+
+
+
+
+    {% endif %}
+    {% endblock %}
+
+</body>
+
+
+</html>

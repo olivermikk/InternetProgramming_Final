@@ -1,0 +1,105 @@
+{% extends 'C:\Users\olive\Desktop\ACG Fall 2023\Internet Programming\eShopFinal\eShop\templates\layout.html' %}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="navBar">
+        {% block navBar %}navBar{% endblock %}
+    </div>
+
+
+    {% block content %}
+
+    <h1>Products:</h1>
+    <!-- Category filter form -->
+
+    <div id="cat_search" name="cat_search">
+        <form method="get" action="{% url 'shop:filtered_products' %}">
+            <label for="category">Filter by Category:</label>
+            <select id="category" name="category">
+                <option value="">All Categories</option>
+                <!-- Add options dynamically based on your categories -->
+                {% for category in categories %}
+                <option value="{{ category }}">{{ category }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+        <!-- Search Bar -->
+        <form method="get" action="{% url 'shop:filtered_products' %}">
+            <input type="text" name="search" placeholder="Search by name">
+            <button type="submit">Search</button>
+        </form>
+
+    </div>
+
+    <form method="get" action="{% url 'shop:filtered_products' %}">
+        <label for="sort_by">Sort By:</label>
+        <select name="sort_by">
+            <option value="">Default</option>
+            <option value="rating" {% if sort_by == 'rating' %}selected{% endif %}>Rating</option>
+            <option value="price" {% if sort_by == 'price' %}selected{% endif %}>Price</option>
+        </select>
+    
+        <label for="order">Order:</label>
+        <select name="order">
+            <option value="asc" {% if order == 'asc' %}selected{% endif %}>Ascending</option>
+            <option value="desc" {% if order == 'desc' %}selected{% endif %}>Descending</option>
+        </select>
+        
+        <button type="submit">Apply Sort</button>
+    </form>
+
+    {% if user.is_authenticated %}
+
+    <!-- Display recommended products -->
+    <form action="{% url 'shop:recommend_products' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Get Recommended Products</button>
+    </form>
+    {% endif %}
+
+
+
+
+
+    <div class="product-container">
+        <div class="product-grid">
+            {% for object in objects %}
+            <div class="product-item">
+                <a href="{% url 'shop:productDetails' name=object.name %}" target="_self">
+                    <div class="product-item img">
+                        <img alt="" src="{{ object.image.url }}">
+                    </div>
+                    <h3>{{ object.name }} {{ object.category }}</h3>
+                    <p>${{ object.price }}</p>
+                    {% if object.average_rating > 0 %}
+                    <p>{{ object.average_rating }} of 5 stars </p>
+                    {% endif %}
+
+                </a>
+            </div>
+            {% empty %}
+            <p>No objects found</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% endblock %}
+
+</body>
+
+</html>

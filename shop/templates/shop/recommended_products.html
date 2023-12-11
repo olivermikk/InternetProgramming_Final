@@ -1,0 +1,27 @@
+{% extends 'C:\Users\olive\Desktop\ACG Fall 2023\Internet Programming\eShopFinal\eShop\templates\layout.html' %}
+
+<div class="navBar">
+    {% block navBar %}navBar{% endblock %}
+</div>
+{% block content %}
+    {% if recommended_products %}
+        <div class="recommended-products">
+            <h1>Recommended Products</h1>
+            <div class="product-grid">
+                {% for recommended_product in recommended_products %}
+                    <div class="product-item">
+                        <a href="{% url 'shop:productDetails' name=recommended_product.name %}" target="_self">
+                            <div class="product-item img">
+                                <img alt="" src="{{ recommended_product.image.url }}">
+                            </div>
+                            <h3>{{ recommended_product.name }} {{ recommended_product.category }}</h3>
+                            <p>${{ recommended_product.price }}</p>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <p>No recommended products available.</p>
+    {% endif %}
+{% endblock %}

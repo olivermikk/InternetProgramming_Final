@@ -1,0 +1,62 @@
+<!-- ADD LAYOUT -->
+{% extends 'C:\Users\olive\Desktop\ACG Fall 2023\Internet Programming\eShopFinal\eShop\templates\layout.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Product Details</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+    </script>
+</head>
+
+
+<body>
+
+    <div class="navBar">
+        {% block navBar %}navBar{% endblock %}
+    </div>
+    
+    {% block content %}
+
+    <a href="{% url 'shop:products' %}" class="back-button">Back to Products</a>
+
+    <div class="product-item-solo">
+        <h3>{{ object.name }} {{ object.category }}</h3>
+        <p>{{ object.description }} ${{ object.price }}</p>
+        <div class="product-item-solo img">
+            <img alt="" src="{{ object.image.url }}">
+        </div>
+    </div>
+
+    <form method="post" action="{% url 'shop:add_to_cart' name=object.name %}">
+        {% csrf_token %}
+        <button type="submit" class="add_to_cart_button">Add to Cart</button>
+    </form>
+
+    {% if request.user.is_authenticated %}
+    <p>Rate this product:</p>
+    <form method="post" class="rate_product_form"action="{% url 'shop:rate_product' name=object.name %}">
+        {% csrf_token %}
+        <select name="rating">
+            <option value="1">1 star</option>
+            <option value="2">2 stars</option>
+            <option value="3">3 stars</option>
+            <option value="4">4 stars</option>
+            <option value="5">5 stars</option>
+        </select>
+        <button type="submit">Submit Rating</button>
+    </form>
+    {% endif %}
+    {% endblock %}
+
+</body>
+
+</html>
