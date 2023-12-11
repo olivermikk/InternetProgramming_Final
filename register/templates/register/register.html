@@ -1,0 +1,15 @@
+{% extends 'C:\Users\olive\Desktop\ACG Fall 2023\Internet Programming\eShopFinal\eShop\templates\layout.html' %}
+
+{% block title %}Create an Account{% endblock %}
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<form method="POST" class="form-group">
+    {% csrf_token %}
+
+    {{ form | crispy}}
+    <button type "submit">Register</button>
+</form>
+{% endblock %}
